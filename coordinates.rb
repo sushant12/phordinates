@@ -1,10 +1,11 @@
 require 'exifr/jpeg'
-
+require 'csv'
 Dir["*.jpg"].each do |name| # fetch all jpg from current dir
 	CSV.open("t.csv", "ab") do |csv|
-		if EXIFR::JPEG.new(name).gps 
-			lat = EXIFR::JPEG.new(name).gps.latitude
-			lng = EXIFR::JPEG.new(name).gps.longitude
+		gps = EXIFR::JPEG.new(name).gps 
+		if gps 
+			lat = gps.latitude
+			lng = gps.longitude
 			csv << [lat, lng]
 		end
 	end
